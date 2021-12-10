@@ -1,0 +1,17 @@
+{
+  "name": "Dogecoin 2.0",
+  "website": "https://dogecoin2.org",
+  "symbol": "DOGE2",
+  "explorer": "https://bscscan.com/",
+  "decimals": 9,
+  "links": [
+    {
+      "name": "github",
+      "url": "https://github.com/Dogecoin-2-0"
+    },
+    {
+      "name": "twitter",
+      "url": "https://twitter.com/Doge2_Official"
+    }
+  ]
+}

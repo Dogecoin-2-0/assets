@@ -1,0 +1,21 @@
+{
+  "name": "Binance USD",
+  "website": "https://paxos.com/busd",
+  "symbol": "BUSD",
+  "explorer": "https://bscscan.com/",
+  "decimals": 18,
+  "links": [
+    {
+      "name": "github",
+      "url": "https://github.com/binance-chain"
+    },
+    {
+      "name": "twitter",
+      "url": "https://twitter.com/binance_dex"
+    },
+    {
+      "name": "telegram",
+      "url": "https://t.me/BinanceDEXchange"
+    }
+  ]
+}
