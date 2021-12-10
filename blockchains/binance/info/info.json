@@ -1,0 +1,16 @@
+{
+  "name": "Binance Smartchain",
+  "website": "https://binance.org",
+  "symbol": "BNB",
+  "explorer": "https://bscscan.com/",
+  "links": [
+    {
+      "name": "github",
+      "url": "https://github.com/binance"
+    },
+    {
+      "name": "twitter",
+      "url": "https://twitter.com/binance"
+    }
+  ]
+}
