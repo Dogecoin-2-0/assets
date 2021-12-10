@@ -8,11 +8,15 @@ const router = express.Router();
 const port = process.env.PORT || 8760;
 
 router.get('/assets/:id/info', (req, res) => {
-  let result = fs.readFileSync(
-    path.join(__dirname, `/blockchains/${req.params.id}/info/info.json`)
-  );
-  result = JSON.parse(result.toString());
-  res.status(200).json({ result });
+  try {
+    let result = fs.readFileSync(
+      path.join(__dirname, `/blockchains/${req.params.id}/info/info.json`)
+    );
+    result = JSON.parse(result.toString());
+    return res.status(200).json({ result });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 router.get('/assets/:id/image', (req, res) => {
@@ -22,14 +26,18 @@ router.get('/assets/:id/image', (req, res) => {
 });
 
 router.get('/assets/tokens/:network/:address/info', (req, res) => {
-  let result = fs.readFileSync(
-    path.join(
-      __dirname,
-      `/blockchains/${req.params.network}/assets/${req.params.address}/info.json`
-    )
-  );
-  result = JSON.parse(result.toString());
-  res.status(200).json({ result });
+  try {
+    let result = fs.readFileSync(
+      path.join(
+        __dirname,
+        `/blockchains/${req.params.network}/assets/${req.params.address}/info.json`
+      )
+    );
+    result = JSON.parse(result.toString());
+    return res.status(200).json({ result });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 router.get('/assets/tokens/:network/:address/image', (req, res) => {
@@ -42,10 +50,14 @@ router.get('/assets/tokens/:network/:address/image', (req, res) => {
 });
 
 router.get('/assets/tokens/:network/addresses', (req, res) => {
-  const result = fs.readdirSync(
-    path.join(__dirname, `blockchains/${req.params.network}/assets`)
-  );
-  res.status(200).json({ result });
+  try {
+    const result = fs.readdirSync(
+      path.join(__dirname, `blockchains/${req.params.network}/assets`)
+    );
+    return res.status(200).json({ result });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 app.use(require('morgan')('dev'));
