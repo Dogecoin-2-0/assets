@@ -94,6 +94,20 @@ function consistencyCheck() {
       'Links must be an array'
     );
 
+    for (const obj of blockchainInfoFileContent.links) {
+      assert.ok(typeof obj === 'object', 'Link info must be object');
+      assert.ok('name' in obj, "Link object must contain 'name' key");
+      assert.ok('url' in obj, "Link object must contain 'url' key");
+      assert.ok(typeof obj.name === 'string', 'Link name must be string');
+      assert.ok(typeof obj.url === 'string', 'Link url must be string');
+    }
+
+    if ('chainlinkUSDId' in blockchainInfoFileContent)
+      assert.ok(
+        typeof blockchainInfoFileContent.chainlinkUSDId === 'string',
+        'ChainlinkUSDId must be string'
+      );
+
     // Check is run if one of these folders is named 'assets'
     if (o.includes('assets')) {
       const v = fs
