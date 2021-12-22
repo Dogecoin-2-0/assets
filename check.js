@@ -90,12 +90,45 @@ const assert = require('assert');
         assert.ok(files.length === 2, '2 files required but found: ' + files.length);
 
         for (const file of files) {
-          if (!/(png|json)/.test(path.extname(file)))
-            throw new Error(`Unallowed extension: expected [png | json] but found ${path.extname(file)}`);
-
-          if (!['info.json', 'logo.png'].includes(file))
-            throw new Error(`Invalid file name: expected [info.json | logo.png] but found: ${file}`);
+          assert.ok(
+            /(png|json)/.test(path.extname(file)),
+            `Unallowed extension: expected [png | json] but found ${path.extname(file)}`
+          );
+          assert.ok(
+            ['info.json', 'logo.png'].includes(file),
+            `Invalid file name: expected [info.json | logo.png] but found: ${file}`
+          );
         }
+
+        const tokenInfoFile = fs.readFileSync(path.join(__dirname, mainFolder, f, 'assets', address, 'info.json'));
+        const tokenInfoFileContent = JSON.parse(tokenInfoFile.toString());
+
+        // JSON must contain necessary properties
+        assert.ok('name' in tokenInfoFileContent, 'Token info must contain name');
+        assert.ok('website' in tokenInfoFileContent, 'Token info must contain website');
+        assert.ok('symbol' in tokenInfoFileContent, 'Token info must contain symbol');
+        assert.ok('explorer' in tokenInfoFileContent, 'Token info must contain explorer');
+        assert.ok('links' in tokenInfoFileContent, 'Token info must contain links');
+        assert.ok('decimals' in tokenInfoFileContent, 'Token info must contain decimals');
+
+        // JSON properties must be of certain types
+        assert.ok(typeof tokenInfoFileContent.name === 'string', 'Name must be string');
+        assert.ok(typeof tokenInfoFileContent.website === 'string', 'Website must be string');
+        assert.ok(typeof tokenInfoFileContent.symbol === 'string', 'Symbol must be string');
+        assert.ok(typeof tokenInfoFileContent.explorer === 'string', 'Explorer must be string');
+        assert.ok(Array.isArray(tokenInfoFileContent.links), 'Links must be an array');
+        assert.ok(typeof tokenInfoFileContent.decimals === 'number', 'Decimals must be a number');
+
+        for (const obj of tokenInfoFileContent.links) {
+          assert.ok(typeof obj === 'object', 'Link info must be object');
+          assert.ok('name' in obj, "Link object must contain 'name' key");
+          assert.ok('url' in obj, "Link object must contain 'url' key");
+          assert.ok(typeof obj.name === 'string', 'Link name must be string');
+          assert.ok(typeof obj.url === 'string', 'Link url must be string');
+        }
+
+        if ('chainlinkUSDId' in tokenInfoFileContent)
+          assert.ok(typeof tokenInfoFileContent.chainlinkUSDId === 'string', 'ChainlinkUSDId must be string');
       }
     }
   }
