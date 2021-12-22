@@ -7,7 +7,7 @@ const path = require('path');
 const assert = require('assert');
 
 // Check consistency
-function consistencyCheck() {
+(function () {
   const mainFolder = 'blockchains';
   const blockchainFolders = fs.readdirSync(path.join(__dirname, mainFolder), {
     withFileTypes: true
@@ -156,6 +156,4 @@ function consistencyCheck() {
     }
   }
   console.log('Check passed!!');
-}
-
-consistencyCheck();
+})();
