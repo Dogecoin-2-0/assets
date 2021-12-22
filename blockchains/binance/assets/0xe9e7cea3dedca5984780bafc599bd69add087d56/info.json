@@ -4,6 +4,7 @@
   "symbol": "BUSD",
   "explorer": "https://bscscan.com/",
   "decimals": 18,
+  "chainlinkUSDId": "0xcBb98864Ef56E9042e7d2efef76141f15731B82f",
   "links": [
     {
       "name": "github",

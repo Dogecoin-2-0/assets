@@ -30,7 +30,9 @@ router.get('/assets/tokens/:network/:address/info', (req, res) => {
     let result = fs.readFileSync(
       path.join(
         __dirname,
-        `/blockchains/${req.params.network}/assets/${req.params.address}/info.json`
+        `/blockchains/${
+          req.params.network
+        }/assets/${req.params.address.toLowerCase()}/info.json`
       )
     );
     result = JSON.parse(result.toString());

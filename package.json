@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Dogecoin-2-0/assets#readme",
   "dependencies": {
+    "assert": "^2.0.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0"
   }

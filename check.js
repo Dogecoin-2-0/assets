@@ -4,6 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const assert = require('assert');
 
 // Check consistency
 function consistencyCheck() {
@@ -22,10 +23,76 @@ function consistencyCheck() {
       .map((dirent) => dirent.name);
 
     // Blockchains folder must contain 1 or 2 sub-folders
-    if (o.length < 1 || o.length > 2)
-      throw new Error(
-        'Invalid number of sub-folders: [expected 1 or 2 sub-folders]'
+    assert.ok(
+      o.length === 1 || o.length === 2,
+      'Invalid number of sub-folders: [expected 1 or 2 sub-folders]'
+    );
+
+    // Must include 'info' folder
+    assert.ok(o.includes('info'), 'Info folder is necessary');
+
+    // Run check for files in info folder
+    const x = fs
+      .readdirSync(path.join(__dirname, mainFolder, f, 'info'), {
+        withFileTypes: true
+      })
+      .filter((dirent) => dirent.isFile())
+      .map((dirent) => dirent.name);
+
+    for (const name of x)
+      assert.ok(
+        ['info.json', 'logo.png'].includes(name),
+        `Invalid file name: expected [info.json | logo.png] but found: ${name}`
       );
+
+    const blockchainInfoFile = fs.readFileSync(
+      path.join(__dirname, mainFolder, f, 'info', 'info.json')
+    );
+    const blockchainInfoFileContent = JSON.parse(blockchainInfoFile.toString());
+
+    // JSON must contain necessary properties
+    assert.ok(
+      'name' in blockchainInfoFileContent,
+      'Blockchain info must contain name'
+    );
+    assert.ok(
+      'website' in blockchainInfoFileContent,
+      'Blockchain info must contain website'
+    );
+    assert.ok(
+      'symbol' in blockchainInfoFileContent,
+      'Blockchain info must contain symbol'
+    );
+    assert.ok(
+      'explorer' in blockchainInfoFileContent,
+      'Blockchain info must contain explorer'
+    );
+    assert.ok(
+      'links' in blockchainInfoFileContent,
+      'Blockchain info must contain links'
+    );
+
+    // JSON properties must be of certain types
+    assert.ok(
+      typeof blockchainInfoFileContent.name === 'string',
+      'Name must be string'
+    );
+    assert.ok(
+      typeof blockchainInfoFileContent.website === 'string',
+      'Website must be string'
+    );
+    assert.ok(
+      typeof blockchainInfoFileContent.symbol === 'string',
+      'Symbol must be string'
+    );
+    assert.ok(
+      typeof blockchainInfoFileContent.explorer === 'string',
+      'Explorer must be string'
+    );
+    assert.ok(
+      Array.isArray(blockchainInfoFileContent.links),
+      'Links must be an array'
+    );
 
     // Check is run if one of these folders is named 'assets'
     if (o.includes('assets')) {
