@@ -12,9 +12,7 @@ const assert = require('assert');
   const blockchainFolders = fs.readdirSync(path.join(__dirname, mainFolder), {
     withFileTypes: true
   });
-  const filteredFolders = blockchainFolders
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+  const filteredFolders = blockchainFolders.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
 
   for (const f of filteredFolders) {
     const o = fs
@@ -23,10 +21,7 @@ const assert = require('assert');
       .map((dirent) => dirent.name);
 
     // Blockchains folder must contain 1 or 2 sub-folders
-    assert.ok(
-      o.length === 1 || o.length === 2,
-      'Invalid number of sub-folders: [expected 1 or 2 sub-folders]'
-    );
+    assert.ok(o.length === 1 || o.length === 2, 'Invalid number of sub-folders: [expected 1 or 2 sub-folders]');
 
     // Must include 'info' folder
     assert.ok(o.includes('info'), 'Info folder is necessary');
@@ -45,54 +40,22 @@ const assert = require('assert');
         `Invalid file name: expected [info.json | logo.png] but found: ${name}`
       );
 
-    const blockchainInfoFile = fs.readFileSync(
-      path.join(__dirname, mainFolder, f, 'info', 'info.json')
-    );
+    const blockchainInfoFile = fs.readFileSync(path.join(__dirname, mainFolder, f, 'info', 'info.json'));
     const blockchainInfoFileContent = JSON.parse(blockchainInfoFile.toString());
 
     // JSON must contain necessary properties
-    assert.ok(
-      'name' in blockchainInfoFileContent,
-      'Blockchain info must contain name'
-    );
-    assert.ok(
-      'website' in blockchainInfoFileContent,
-      'Blockchain info must contain website'
-    );
-    assert.ok(
-      'symbol' in blockchainInfoFileContent,
-      'Blockchain info must contain symbol'
-    );
-    assert.ok(
-      'explorer' in blockchainInfoFileContent,
-      'Blockchain info must contain explorer'
-    );
-    assert.ok(
-      'links' in blockchainInfoFileContent,
-      'Blockchain info must contain links'
-    );
+    assert.ok('name' in blockchainInfoFileContent, 'Blockchain info must contain name');
+    assert.ok('website' in blockchainInfoFileContent, 'Blockchain info must contain website');
+    assert.ok('symbol' in blockchainInfoFileContent, 'Blockchain info must contain symbol');
+    assert.ok('explorer' in blockchainInfoFileContent, 'Blockchain info must contain explorer');
+    assert.ok('links' in blockchainInfoFileContent, 'Blockchain info must contain links');
 
     // JSON properties must be of certain types
-    assert.ok(
-      typeof blockchainInfoFileContent.name === 'string',
-      'Name must be string'
-    );
-    assert.ok(
-      typeof blockchainInfoFileContent.website === 'string',
-      'Website must be string'
-    );
-    assert.ok(
-      typeof blockchainInfoFileContent.symbol === 'string',
-      'Symbol must be string'
-    );
-    assert.ok(
-      typeof blockchainInfoFileContent.explorer === 'string',
-      'Explorer must be string'
-    );
-    assert.ok(
-      Array.isArray(blockchainInfoFileContent.links),
-      'Links must be an array'
-    );
+    assert.ok(typeof blockchainInfoFileContent.name === 'string', 'Name must be string');
+    assert.ok(typeof blockchainInfoFileContent.website === 'string', 'Website must be string');
+    assert.ok(typeof blockchainInfoFileContent.symbol === 'string', 'Symbol must be string');
+    assert.ok(typeof blockchainInfoFileContent.explorer === 'string', 'Explorer must be string');
+    assert.ok(Array.isArray(blockchainInfoFileContent.links), 'Links must be an array');
 
     for (const obj of blockchainInfoFileContent.links) {
       assert.ok(typeof obj === 'object', 'Link info must be object');
@@ -103,10 +66,7 @@ const assert = require('assert');
     }
 
     if ('chainlinkUSDId' in blockchainInfoFileContent)
-      assert.ok(
-        typeof blockchainInfoFileContent.chainlinkUSDId === 'string',
-        'ChainlinkUSDId must be string'
-      );
+      assert.ok(typeof blockchainInfoFileContent.chainlinkUSDId === 'string', 'ChainlinkUSDId must be string');
 
     // Check is run if one of these folders is named 'assets'
     if (o.includes('assets')) {
@@ -118,39 +78,23 @@ const assert = require('assert');
         .map((dirent) => dirent.name);
 
       for (const address of v) {
-        if (!/^[a-z0-9]+$/.test(address))
-          throw new Error(
-            'Invalid address: [must be alphanumeric & lowercase]'
-          );
+        assert.ok(/^[a-z0-9]+$/.test(address), 'Invalid address: [must be alphanumeric & lowercase]');
 
-        const z = fs.readdirSync(
-          path.join(__dirname, mainFolder, f, 'assets', address),
-          { withFileTypes: true }
-        );
+        const z = fs.readdirSync(path.join(__dirname, mainFolder, f, 'assets', address), { withFileTypes: true });
         const withDirectories = z.filter((dirent) => dirent.isDirectory());
 
-        if (withDirectories.length !== 0)
-          throw new Error('Asset folder must not contain directories');
+        assert.ok(withDirectories.length === 0, 'Asset folder must not contain directories');
 
-        const files = z
-          .filter((dirent) => dirent.isFile())
-          .map((dirent) => dirent.name);
+        const files = z.filter((dirent) => dirent.isFile()).map((dirent) => dirent.name);
 
-        if (files.length !== 2)
-          throw new Error('2 files required but found: ' + files.length);
+        assert.ok(files.length === 2, '2 files required but found: ' + files.length);
 
         for (const file of files) {
           if (!/(png|json)/.test(path.extname(file)))
-            throw new Error(
-              `Unallowed extension: expected [png | json] but found ${path.extname(
-                file
-              )}`
-            );
+            throw new Error(`Unallowed extension: expected [png | json] but found ${path.extname(file)}`);
 
           if (!['info.json', 'logo.png'].includes(file))
-            throw new Error(
-              `Invalid file name: expected [info.json | logo.png] but found: ${file}`
-            );
+            throw new Error(`Invalid file name: expected [info.json | logo.png] but found: ${file}`);
         }
       }
     }

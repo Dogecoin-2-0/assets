@@ -9,9 +9,7 @@ const port = process.env.PORT || 8760;
 
 router.get('/assets/:id/info', (req, res) => {
   try {
-    let result = fs.readFileSync(
-      path.join(__dirname, `/blockchains/${req.params.id}/info/info.json`)
-    );
+    let result = fs.readFileSync(path.join(__dirname, `/blockchains/${req.params.id}/info/info.json`));
     result = JSON.parse(result.toString());
     return res.status(200).json({ result });
   } catch (error) {
@@ -20,20 +18,13 @@ router.get('/assets/:id/info', (req, res) => {
 });
 
 router.get('/assets/:id/image', (req, res) => {
-  res.sendFile(
-    path.join(__dirname, `/blockchains/${req.params.id}/info/logo.png`)
-  );
+  res.sendFile(path.join(__dirname, `/blockchains/${req.params.id}/info/logo.png`));
 });
 
 router.get('/assets/tokens/:network/:address/info', (req, res) => {
   try {
     let result = fs.readFileSync(
-      path.join(
-        __dirname,
-        `/blockchains/${
-          req.params.network
-        }/assets/${req.params.address.toLowerCase()}/info.json`
-      )
+      path.join(__dirname, `/blockchains/${req.params.network}/assets/${req.params.address.toLowerCase()}/info.json`)
     );
     result = JSON.parse(result.toString());
     return res.status(200).json({ result });
@@ -43,19 +34,12 @@ router.get('/assets/tokens/:network/:address/info', (req, res) => {
 });
 
 router.get('/assets/tokens/:network/:address/image', (req, res) => {
-  res.sendFile(
-    path.join(
-      __dirname,
-      `blockchains/${req.params.network}/assets/${req.params.address}/logo.png`
-    )
-  );
+  res.sendFile(path.join(__dirname, `blockchains/${req.params.network}/assets/${req.params.address}/logo.png`));
 });
 
 router.get('/assets/tokens/:network/addresses', (req, res) => {
   try {
-    const result = fs.readdirSync(
-      path.join(__dirname, `blockchains/${req.params.network}/assets`)
-    );
+    const result = fs.readdirSync(path.join(__dirname, `blockchains/${req.params.network}/assets`));
     return res.status(200).json({ result });
   } catch (error) {
     return res.status(500).json({ error: error.message });
