@@ -3,7 +3,6 @@
   "website": "https://binance.org",
   "symbol": "BNB",
   "explorer": "https://bscscan.com/",
-  "chainlinkUSDId": "0x14e613AC84a31f709eadbdF89C6CC390fDc9540A",
   "links": [
     {
       "name": "github",

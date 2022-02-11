@@ -1,0 +1,20 @@
+{
+  "name": "Avalanche",
+  "website": "https://avax.network",
+  "symbol": "MATIC",
+  "explorer": "https://snowtrace.io/",
+  "links": [
+    {
+      "name": "github",
+      "url": "https://github.com/ava-labs"
+    },
+    {
+      "name": "twitter",
+      "url": "https://twitter.com/avalancheavax"
+    },
+    {
+      "name": "reddit",
+      "url": "https://www.reddit.com/r/Avax/"
+    }
+  ]
+}
