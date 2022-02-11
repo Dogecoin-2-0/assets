@@ -65,9 +65,6 @@ const assert = require('assert');
       assert.ok(typeof obj.url === 'string', 'Link url must be string');
     }
 
-    if ('chainlinkUSDId' in blockchainInfoFileContent)
-      assert.ok(typeof blockchainInfoFileContent.chainlinkUSDId === 'string', 'ChainlinkUSDId must be string');
-
     // Check is run if one of these folders is named 'assets'
     if (o.includes('assets')) {
       const v = fs
