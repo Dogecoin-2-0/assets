@@ -126,9 +126,6 @@ const assert = require('assert');
           assert.ok(typeof obj.name === 'string', 'Link name must be string');
           assert.ok(typeof obj.url === 'string', 'Link url must be string');
         }
-
-        if ('chainlinkUSDId' in tokenInfoFileContent)
-          assert.ok(typeof tokenInfoFileContent.chainlinkUSDId === 'string', 'ChainlinkUSDId must be string');
       }
     }
   }
