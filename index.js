@@ -37,6 +37,15 @@ router.get('/assets/tokens/:network/:address/image', (req, res) => {
   res.sendFile(path.join(__dirname, `blockchains/${req.params.network}/assets/${req.params.address}/logo.png`));
 });
 
+router.get('/assets/list', (req, res) => {
+  try {
+    const result = fs.readdirSync(path.join(__dirname, 'blockchains'));
+    return res.status(200).json({ result });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 router.get('/assets/tokens/:network/addresses', (req, res) => {
   try {
     const result = fs.readdirSync(path.join(__dirname, `blockchains/${req.params.network}/assets`));
