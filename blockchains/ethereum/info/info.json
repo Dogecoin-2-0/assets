@@ -2,7 +2,7 @@
   "name": "Ethereum",
   "website": "https://ethereum.org",
   "symbol": "ETH",
-  "explorer": "https://etherscan.io/",
+  "explorer": "https://ropsten.etherscan.io/",
   "links": [
     {
       "name": "github",

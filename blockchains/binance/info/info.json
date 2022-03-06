@@ -2,7 +2,7 @@
   "name": "Binance Smartchain",
   "website": "https://binance.org",
   "symbol": "BNB",
-  "explorer": "https://bscscan.com/",
+  "explorer": "https://testnet.bscscan.com/",
   "links": [
     {
       "name": "github",
