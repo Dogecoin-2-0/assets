@@ -18,5 +18,6 @@
       "name": "telegram",
       "url": "https://t.me/BinanceDEXchange"
     }
-  ]
+  ],
+  "coinGeckoID": "binance-usd"
 }

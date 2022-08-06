@@ -27,6 +27,7 @@ router.get('/assets/tokens/:network/:address/info', (req, res) => {
       path.join(__dirname, `/blockchains/${req.params.network}/assets/${req.params.address.toLowerCase()}/info.json`)
     );
     result = JSON.parse(result.toString());
+    result = { ...result, isToken: true, contractAddress: req.params.address.toLowerCase() };
     return res.status(200).json({ result });
   } catch (error) {
     return res.status(500).json({ error: error.message });

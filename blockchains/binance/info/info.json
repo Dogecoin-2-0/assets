@@ -12,5 +12,6 @@
       "name": "twitter",
       "url": "https://twitter.com/binance"
     }
-  ]
+  ],
+  "coinGeckoID": "binancecoin"
 }
