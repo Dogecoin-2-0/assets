@@ -23,10 +23,15 @@ router.get('/assets/:id/image', (req, res) => {
 
 router.get('/assets/tokens/:network/:address/info', (req, res) => {
   try {
-    let result = fs.readFileSync(
-      path.join(__dirname, `/blockchains/${req.params.network}/assets/${req.params.address.toLowerCase()}/info.json`)
-    );
-    result = JSON.parse(result.toString());
+    let result = fs.existsSync(path.join(__dirname, `blockchains/${req.params.network}/assets`))
+      ? fs.readFileSync(
+          path.join(
+            __dirname,
+            `/blockchains/${req.params.network}/assets/${req.params.address.toLowerCase()}/info.json`
+          )
+        )
+      : {};
+    result = result instanceof Buffer && JSON.parse(result.toString());
     result = { ...result, isToken: true, contractAddress: req.params.address.toLowerCase() };
     return res.status(200).json({ result });
   } catch (error) {
@@ -49,7 +54,9 @@ router.get('/assets/list', (req, res) => {
 
 router.get('/assets/tokens/:network/addresses', (req, res) => {
   try {
-    const result = fs.readdirSync(path.join(__dirname, `blockchains/${req.params.network}/assets`));
+    const result = fs.existsSync(path.join(__dirname, `blockchains/${req.params.network}/assets`))
+      ? fs.readdirSync(path.join(__dirname, `blockchains/${req.params.network}/assets`))
+      : [];
     return res.status(200).json({ result });
   } catch (error) {
     return res.status(500).json({ error: error.message });
