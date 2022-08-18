@@ -2,7 +2,7 @@
   "name": "Avalanche",
   "website": "https://avax.network",
   "symbol": "AVAX",
-  "explorer": "https://testnet.snowtrace.io/",
+  "explorer": "https://snowtrace.io/",
   "links": [
     {
       "name": "github",
